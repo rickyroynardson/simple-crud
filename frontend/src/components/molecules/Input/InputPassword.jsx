@@ -7,9 +7,9 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-} from '@chakra-ui/react';
-import { useState } from 'react';
-import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
+} from "@chakra-ui/react";
+import { useState } from "react";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
 export default function InputPassword({
   label,
@@ -20,6 +20,7 @@ export default function InputPassword({
   errorText,
   isError,
   inputRef,
+  fontSize,
 }) {
   const [show, setShow] = useState(false);
 
@@ -32,14 +33,15 @@ export default function InputPassword({
       <FormLabel>{label}</FormLabel>
       <InputGroup>
         <Input
-          type={show ? 'text' : 'password'}
+          type={show ? "text" : "password"}
           variant={variant}
           focusBorderColor={color}
           placeholder={placeholder}
           ref={inputRef}
+          fontSize={fontSize}
         />
         <InputRightElement>
-          <Button size='sm' p='0' variant='ghost' onClick={toggleShow}>
+          <Button size="sm" p="0" variant="ghost" onClick={toggleShow}>
             {show ? <ViewOffIcon /> : <ViewIcon />}
           </Button>
         </InputRightElement>
