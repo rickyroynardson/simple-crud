@@ -4,7 +4,7 @@ import {
   FormHelperText,
   FormLabel,
   Input,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 
 export default function InputNormal({
   label,
@@ -16,6 +16,7 @@ export default function InputNormal({
   errorText,
   isError,
   inputRef,
+  fontSize,
 }) {
   return (
     <FormControl isInvalid={isError}>
@@ -26,6 +27,7 @@ export default function InputNormal({
         placeholder={placeholder}
         focusBorderColor={color}
         ref={inputRef}
+        fontSize={fontSize}
       />
       {isError ? (
         <FormErrorMessage>{errorText}</FormErrorMessage>
