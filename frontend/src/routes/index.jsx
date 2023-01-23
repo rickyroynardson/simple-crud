@@ -1,23 +1,28 @@
-import { lazy } from "react";
-import { createBrowserRouter } from "react-router-dom";
-const Login = lazy(() => import("../pages/Login"));
-const Register = lazy(() => import("../pages/Register"));
+import { lazy } from 'react';
+import { createBrowserRouter } from 'react-router-dom';
+const Login = lazy(() => import('../pages/Login'));
+const Register = lazy(() => import('../pages/Register'));
+const Dashboard = lazy(() => import('../pages/Dashboard'));
 
 export default createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     children: [
       {
         index: true,
         element: <Login />,
       },
       {
-        path: "login",
+        path: 'login',
         element: <Login />,
       },
       {
-        path: "register",
+        path: 'register',
         element: <Register />,
+      },
+      {
+        path: 'dashboard',
+        element: <Dashboard />,
       },
     ],
   },

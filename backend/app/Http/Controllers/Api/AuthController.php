@@ -51,7 +51,7 @@ class AuthController extends Controller
 
                 return response()->json(['message' => 'User logged in successfully', 'user' => $user, 'access_token' => $access_token, 'status' => 200], 200)->withCookie(cookie('refresh_token', $refresh_token, env('REFRESH_TOKEN_EXPIRES_IN', 60 * 24 * 30)));
             } else {
-                return response()->json(['message' => 'Invalid credentials', 'status' => 401], 401);
+                return response()->json(['message' => 'Invalid credentials', 'errors' => [], 'status' => 401], 401);
             }
         } catch (QueryException $error) {
             return response()->json(['message' => 'Error occured while processing the request', 'error' => $error, 'status' => 500], 500);
