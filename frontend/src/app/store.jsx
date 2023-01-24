@@ -4,10 +4,12 @@ import { combineReducers } from "redux";
 import { persistReducer } from "redux-persist";
 import { CookieStorage } from "redux-persist-cookie-storage";
 import thunk from "redux-thunk";
-import authReducer from "../redux/features/authSlice";
+import userReducer from "../redux/features/userSlice";
+import tokenReducer from "../redux/features/tokenSlice";
 
 const reducers = combineReducers({
-  auth: authReducer,
+  user: userReducer,
+  token: tokenReducer,
 });
 
 const persistConfig = {

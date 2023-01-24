@@ -5,15 +5,15 @@ import Loading from "./Loading";
 
 export default function Authed() {
   const navigate = useNavigate();
-  const auth = useSelector((state) => state.auth.auth);
+  const user = useSelector((state) => state.user.user);
 
   useEffect(() => {
-    if (!auth) {
+    if (!user) {
       navigate("/login");
     }
   }, []);
 
-  if (!auth) {
+  if (!user) {
     return <Loading />;
   }
   return <Outlet />;

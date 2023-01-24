@@ -7,7 +7,9 @@ import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
 import App from "./App";
 import store from "./app/store";
+import { injectStore } from "./axios";
 
+injectStore(store);
 const persistor = persistStore(store);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
