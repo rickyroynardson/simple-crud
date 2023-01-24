@@ -14,7 +14,8 @@ import axios from "../axios";
 import { InputNormal, InputPassword } from "../components/molecules/Input";
 import { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { login } from "../redux/features/authSlice";
+import { setUser } from "../redux/features/userSlice";
+import { setToken } from "../redux/features/tokenSlice";
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -45,8 +46,12 @@ export default function Login() {
             status: "success",
             duration: 2000,
           });
+          dispatch(setUser(res.data.user));
           dispatch(
-            login({ user: res.data.user, access_token: res.data.access_token })
+            setToken({
+              access: res.data.access_token,
+              refresh: res.data.refresh_token,
+            })
           );
           navigate("/dashboard");
         })

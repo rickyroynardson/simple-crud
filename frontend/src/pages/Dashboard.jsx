@@ -1,17 +1,61 @@
 import { Box } from "@chakra-ui/react";
-import { useEffect } from "react";
+import axios from "../axios";
 import { Helmet } from "react-helmet-async";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setToken } from "../redux/features/tokenSlice";
 
 export default function Dashboard() {
-  const auth = useSelector((state) => state.auth.auth);
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.user);
+  const token = useSelector((state) => state.token.token);
+
+  const handleExample = () => {
+    console.log("akses token yg dipake;", token.access);
+    axios({
+      method: "get",
+      url: "/example",
+      headers: {
+        Authorization: `Bearer ${token.access}`,
+      },
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleRefresh = () => {
+    console.log("refresh token yg dipake: ", token.refresh);
+    axios({
+      method: "get",
+      url: "/refresh",
+      headers: {
+        refresh_token: token.refresh,
+      },
+    })
+      .then((res) => {
+        console.log(res.data.access_token);
+        dispatch(setToken({ ...token, access: res.data.access_token }));
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+      });
+  };
 
   return (
     <>
       <Helmet>
         <title>Dashboard</title>
       </Helmet>
-      <Box>welcome, {auth.user.name}</Box>
+      <Box>
+        welcome, {user.name}
+        <p>access: {token.access}</p>
+        <p>refresh: {token.refresh}</p>
+        <button onClick={handleExample}>Test Example</button>
+        <button onClick={handleRefresh}>Refresh</button>
+      </Box>
     </>
   );
 }

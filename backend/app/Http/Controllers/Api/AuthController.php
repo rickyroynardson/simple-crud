@@ -49,7 +49,7 @@ class AuthController extends Controller
                 $access_token = $user->createToken('access_token', 'access', ['access_token'])->plainTextToken;
                 $refresh_token = $user->createToken('refresh_token', 'refresh', ['refresh_token'])->plainTextToken;
 
-                return response()->json(['message' => 'User logged in successfully', 'user' => $user, 'access_token' => $access_token, 'status' => 200], 200)->withCookie(cookie('refresh_token', $refresh_token, env('REFRESH_TOKEN_EXPIRES_IN', 60 * 24 * 30)));
+                return response()->json(['message' => 'User logged in successfully', 'user' => $user, 'access_token' => $access_token, 'refresh_token' => $refresh_token, 'status' => 200], 200);
             } else {
                 return response()->json(['message' => 'Invalid credentials', 'errors' => [], 'status' => 401], 401);
             }

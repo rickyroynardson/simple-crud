@@ -11,7 +11,7 @@ class TokenController extends Controller
 {
     public function refresh(Request $request)
     {
-        $refresh_token = $request->cookie('refresh_token');
+        $refresh_token = $request->header('refresh_token');
 
         if (!$refresh_token) {
             return response()->json(['message' => 'Unauthenticated', 'status' => 401], 401);

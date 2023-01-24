@@ -5,15 +5,15 @@ import Loading from "./Loading";
 
 export default function Guest() {
   const navigate = useNavigate();
-  const auth = useSelector((state) => state.auth.auth);
+  const user = useSelector((state) => state.user.user);
 
   useEffect(() => {
-    if (auth) {
+    if (user) {
       navigate("/dashboard");
     }
   }, []);
 
-  if (auth) {
+  if (user) {
     return <Loading />;
   }
   return <Outlet />;
