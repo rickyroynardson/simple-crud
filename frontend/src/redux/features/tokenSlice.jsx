@@ -13,7 +13,7 @@ export const tokenSlice = createSlice({
       state.token = { ...action.payload };
     },
     clearToken: (state) => {
-      state.token = initialState.token;
+      state.token = { access: null, refresh: null };
     },
   },
 });
