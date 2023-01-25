@@ -3,6 +3,7 @@ import axios from "../axios";
 import { Helmet } from "react-helmet-async";
 import { useDispatch, useSelector } from "react-redux";
 import { setToken } from "../redux/features/tokenSlice";
+import Layout from "../components/Layout";
 
 export default function Dashboard() {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ export default function Dashboard() {
       },
     })
       .then((res) => {
+        alert("jalan");
         console.log(res);
       })
       .catch((error) => {
@@ -49,13 +51,13 @@ export default function Dashboard() {
       <Helmet>
         <title>Dashboard</title>
       </Helmet>
-      <Box>
+      <Layout>
         welcome, {user.name}
         <p>access: {token.access}</p>
         <p>refresh: {token.refresh}</p>
         <button onClick={handleExample}>Test Example</button>
         <button onClick={handleRefresh}>Refresh</button>
-      </Box>
+      </Layout>
     </>
   );
 }
