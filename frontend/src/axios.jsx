@@ -1,6 +1,6 @@
-import axios from "axios";
-import { clearToken, setToken } from "./redux/features/tokenSlice";
-import { clearUser } from "./redux/features/userSlice";
+import axios from 'axios';
+import { clearToken, setToken } from './redux/features/tokenSlice';
+import { clearUser } from './redux/features/userSlice';
 
 let store;
 
@@ -17,11 +17,14 @@ instance.interceptors.response.use(
     return response;
   },
   (error) => {
-    if (error.response && error.config.url !== "/login") {
-      if (error.response.status === 401) {
+    if (error.response && error.config.url !== '/login') {
+      if (
+        error.response.status === 401 &&
+        error.response.data.message !== 'Invalid token'
+      ) {
         return instance({
-          method: "get",
-          url: "/refresh",
+          method: 'get',
+          url: '/refresh',
           headers: {
             refresh_token: store.getState().token.token.refresh,
           },
@@ -39,7 +42,7 @@ instance.interceptors.response.use(
           .catch((error) => {
             store.dispatch(clearUser());
             store.dispatch(clearToken());
-            history.go("/login");
+            history.go('/login');
           });
       }
     }
