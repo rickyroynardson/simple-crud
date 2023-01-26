@@ -1,9 +1,9 @@
-import { Box } from "@chakra-ui/react";
-import axios from "../axios";
-import { Helmet } from "react-helmet-async";
-import { useDispatch, useSelector } from "react-redux";
-import { setToken } from "../redux/features/tokenSlice";
-import Layout from "../components/Layout";
+import { Box } from '@chakra-ui/react';
+import axios from '../axios';
+import { Helmet } from 'react-helmet-async';
+import { useDispatch, useSelector } from 'react-redux';
+import { setToken } from '../redux/features/tokenSlice';
+import Layout from '../components/Layout';
 
 export default function Dashboard() {
   const dispatch = useDispatch();
@@ -11,16 +11,15 @@ export default function Dashboard() {
   const token = useSelector((state) => state.token.token);
 
   const handleExample = () => {
-    console.log("akses token yg dipake;", token.access);
+    console.log('akses token yg dipake;', token.access);
     axios({
-      method: "get",
-      url: "/example",
+      method: 'get',
+      url: '/example',
       headers: {
         Authorization: `Bearer ${token.access}`,
       },
     })
       .then((res) => {
-        alert("jalan");
         console.log(res);
       })
       .catch((error) => {
@@ -29,10 +28,10 @@ export default function Dashboard() {
   };
 
   const handleRefresh = () => {
-    console.log("refresh token yg dipake: ", token.refresh);
+    console.log('refresh token yg dipake: ', token.refresh);
     axios({
-      method: "get",
-      url: "/refresh",
+      method: 'get',
+      url: '/refresh',
       headers: {
         refresh_token: token.refresh,
       },
