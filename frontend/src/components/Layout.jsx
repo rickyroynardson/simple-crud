@@ -1,29 +1,37 @@
-import { Box, Button, useToast } from "@chakra-ui/react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { clearToken } from "../redux/features/tokenSlice";
-import { clearUser } from "../redux/features/userSlice";
+import {
+  Box,
+  Drawer,
+  DrawerBody,
+  DrawerCloseButton,
+  DrawerContent,
+  DrawerOverlay,
+  Show,
+  useDisclosure,
+} from '@chakra-ui/react';
+import Header from './organisms/Header';
+import Sidebar from './organisms/Sidebar';
 
-export default function Layout({ children }) {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const toast = useToast();
-
-  const handleLogout = () => {
-    dispatch(clearUser());
-    dispatch(clearToken());
-    toast({
-      description: "User logged out successfully",
-      status: "success",
-      duration: 2000,
-    });
-    navigate("/login");
-  };
+export default function Layout({ user, children }) {
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
-    <Box minH={"100vh"} bg={"gray.100"}>
-      <Button onClick={handleLogout}>Logout</Button>
-      {children}
+    <Box minH={'100vh'} bg={'gray.100'}>
+      <Sidebar display={{ base: 'none', md: 'block' }} />
+      <Show below='md'>
+        <Drawer isOpen={isOpen} onClose={onClose} placement='left' size='sm'>
+          <DrawerOverlay />
+          <DrawerContent>
+            <DrawerCloseButton />
+            <DrawerBody>
+              <Sidebar />
+            </DrawerBody>
+          </DrawerContent>
+        </Drawer>
+      </Show>
+      <Header user={user} onOpen={onOpen} />
+      <Box ml={{ base: 0, md: 60 }} p={5}>
+        {children}
+      </Box>
     </Box>
   );
 }
