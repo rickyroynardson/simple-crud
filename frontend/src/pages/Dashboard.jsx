@@ -50,7 +50,7 @@ export default function Dashboard() {
       <Helmet>
         <title>Dashboard</title>
       </Helmet>
-      <Layout>
+      <Layout user={user}>
         welcome, {user.name}
         <p>access: {token.access}</p>
         <p>refresh: {token.refresh}</p>

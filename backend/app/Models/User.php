@@ -48,9 +48,9 @@ class User extends Authenticatable
     {
         if ($type === 'access') {
             // $expires_at = now()->addMinutes(env('ACCESS_TOKEN_EXPIRES_IN', 60 * 24 * 1));
-            $expires_at = now()->addSecond(5);
+            $expires_at = now()->addMinute(1);
         } else if ($type === 'refresh') {
-            $expires_at = now()->addSecond(10);
+            $expires_at = now()->addMinute(10);
             // $expires_at = now()->addMinute(env('REFRESH_TOKEN_EXPIRES_IN', 60 * 24 * 30));
         }
 
