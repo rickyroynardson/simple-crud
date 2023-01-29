@@ -1,14 +1,15 @@
-import { lazy } from "react";
-import { createBrowserRouter } from "react-router-dom";
-const Guest = lazy(() => import("../components/Guest"));
-const Authed = lazy(() => import("../components/Authed"));
-const Login = lazy(() => import("../pages/Login"));
-const Register = lazy(() => import("../pages/Register"));
-const Dashboard = lazy(() => import("../pages/Dashboard"));
+import { lazy } from 'react';
+import { createBrowserRouter } from 'react-router-dom';
+import NoteIndex from '../pages/Note/Index';
+const Guest = lazy(() => import('../components/Guest'));
+const Authed = lazy(() => import('../components/Authed'));
+const Login = lazy(() => import('../pages/Login'));
+const Register = lazy(() => import('../pages/Register'));
+const Dashboard = lazy(() => import('../pages/Dashboard'));
 
 export default createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     children: [
       {
         element: <Guest />,
@@ -18,11 +19,11 @@ export default createBrowserRouter([
             element: <Login />,
           },
           {
-            path: "login",
+            path: 'login',
             element: <Login />,
           },
           {
-            path: "register",
+            path: 'register',
             element: <Register />,
           },
         ],
@@ -31,8 +32,12 @@ export default createBrowserRouter([
         element: <Authed />,
         children: [
           {
-            path: "dashboard",
+            path: 'dashboard',
             element: <Dashboard />,
+          },
+          {
+            path: 'note',
+            element: <NoteIndex />,
           },
         ],
       },

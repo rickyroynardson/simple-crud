@@ -1,6 +1,7 @@
 import { background, Box, Link, Text, VStack } from '@chakra-ui/react';
-import { FiHome } from 'react-icons/fi';
+import { FiFile, FiHome } from 'react-icons/fi';
 import { NavLink } from 'react-router-dom';
+import { LinkItem } from '../molecules/Sidebar';
 
 export default function Sidebar({ display }) {
   return (
@@ -26,21 +27,8 @@ export default function Sidebar({ display }) {
         </Text>
       </Link>
       <VStack align='stretch'>
-        <Link
-          as={NavLink}
-          to='/dashboard'
-          display='flex'
-          alignItems='center'
-          gap={2}
-          py={2}
-          px={4}
-          borderRadius={'xl'}
-          style={{ textDecoration: 'none' }}
-          _activeLink={{ color: 'white', bg: 'teal.400' }}
-        >
-          <FiHome />
-          Dashboard
-        </Link>
+        <LinkItem to='/dashboard' icon={<FiHome />} label='Dashboard' />
+        <LinkItem to='/note' icon={<FiFile />} label='Note' />
       </VStack>
     </Box>
   );

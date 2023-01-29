@@ -1,4 +1,4 @@
-import { Box } from '@chakra-ui/react';
+import { Box, Text } from '@chakra-ui/react';
 import axios from '../axios';
 import { Helmet } from 'react-helmet-async';
 import { useDispatch, useSelector } from 'react-redux';
@@ -51,11 +51,7 @@ export default function Dashboard() {
         <title>Dashboard</title>
       </Helmet>
       <Layout user={user}>
-        welcome, {user.name}
-        <p>access: {token.access}</p>
-        <p>refresh: {token.refresh}</p>
-        <button onClick={handleExample}>Test Example</button>
-        <button onClick={handleRefresh}>Refresh</button>
+        <Text fontSize={{ md: '3xl' }}>Welcome, {user.name}</Text>
       </Layout>
     </>
   );
