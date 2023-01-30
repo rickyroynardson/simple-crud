@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\NoteController;
 use App\Http\Controllers\Api\TokenController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -35,6 +36,11 @@ Route::prefix(env('API_VERSION', 'v1'))->group(function () {
     Route::middleware('auth:sanctum', 'abilities:access_token')->group(function () {
         Route::get('/example', function () {
             return response()->json(['message' => 'OK'], 200);
+        });
+
+        Route::controller(NoteController::class)->group(function () {
+            Route::get('/notes', 'index');
+            Route::post('/notes', 'store');
         });
     });
 

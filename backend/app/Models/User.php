@@ -44,6 +44,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function notes()
+    {
+        return $this->hasMany(Note::class);
+    }
+
     public function createToken(string $name, string $type, array $abilities = ['*'])
     {
         if ($type === 'access') {
