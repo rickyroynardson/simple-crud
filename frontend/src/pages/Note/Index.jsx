@@ -3,6 +3,8 @@ import {
   Button,
   Card,
   CardBody,
+  FormControl,
+  FormLabel,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -13,20 +15,65 @@ import {
   SimpleGrid,
   Spinner,
   Text,
+  Textarea,
   useDisclosure,
+  useToast,
 } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useSelector } from 'react-redux';
 import axios from '../../axios';
 import Layout from '../../components/Layout';
+import { InputNormal, InputTextarea } from '../../components/molecules/Input';
 
 export default function Index() {
+  const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isLoading, setIsLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [notes, setNotes] = useState([]);
+  const [errors, setErrors] = useState({});
   const user = useSelector((state) => state.user.user);
   const token = useSelector((state) => state.token.token);
+  const titleRef = useRef();
+  const bodyRef = useRef();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    try {
+      const response = await axios({
+        method: 'post',
+        url: '/notes',
+        headers: {
+          Authorization: `Bearer ${token.access}`,
+        },
+        data: {
+          user_id: user.id,
+          title: titleRef.current.value,
+          body: bodyRef.current.value,
+        },
+      });
+      setIsSubmitting(false);
+      setErrors({});
+      toast({
+        description: response.data.message,
+        status: 'success',
+        duration: 2000,
+      });
+      titleRef.current.value = '';
+      bodyRef.current.value = '';
+      onClose();
+    } catch (error) {
+      setIsSubmitting(false);
+      setErrors(error.response.data.errors);
+      toast({
+        description: error.response.data.message,
+        status: 'error',
+        duration: 2000,
+      });
+    }
+  };
 
   const fetchNotes = async () => {
     try {
@@ -79,12 +126,35 @@ export default function Index() {
           <ModalContent>
             <ModalHeader>Add Note</ModalHeader>
             <ModalCloseButton />
-            <ModalBody>
-              <Text>Body</Text>
-            </ModalBody>
-            <ModalFooter>
-              <Button>Submit</Button>
-            </ModalFooter>
+            <form onSubmit={handleSubmit}>
+              <ModalBody>
+                <InputNormal
+                  type='text'
+                  label='Title'
+                  color={'teal.400'}
+                  inputRef={titleRef}
+                  isError={errors.title}
+                  errorText={errors.title}
+                />
+                <InputTextarea
+                  label='Body'
+                  color={'teal.400'}
+                  inputRef={bodyRef}
+                  isError={errors.body}
+                  errorText={errors.body}
+                />
+              </ModalBody>
+              <ModalFooter>
+                <Button
+                  isLoading={isSubmitting}
+                  type='submit'
+                  size={{ base: 'sm', md: 'md' }}
+                  colorScheme={'teal'}
+                >
+                  Submit
+                </Button>
+              </ModalFooter>
+            </form>
           </ModalContent>
         </Modal>
       </Layout>

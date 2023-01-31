@@ -3,12 +3,11 @@ import {
   FormErrorMessage,
   FormHelperText,
   FormLabel,
-  Input,
+  Textarea,
 } from '@chakra-ui/react';
 
-export default function InputNormal({
+export default function InputTextarea({
   label,
-  type,
   variant,
   color,
   placeholder,
@@ -21,13 +20,13 @@ export default function InputNormal({
   return (
     <FormControl isInvalid={isError}>
       <FormLabel>{label}</FormLabel>
-      <Input
-        type={type}
+      <Textarea
         variant={variant}
         placeholder={placeholder}
         focusBorderColor={color}
         ref={inputRef}
         fontSize={fontSize}
+        maxH={'200px'}
       />
       {isError ? (
         <FormErrorMessage>{errorText}</FormErrorMessage>
