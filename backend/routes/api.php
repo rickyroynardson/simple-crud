@@ -40,6 +40,7 @@ Route::prefix(env('API_VERSION', 'v1'))->group(function () {
 
         Route::controller(NoteController::class)->group(function () {
             Route::get('/notes', 'index');
+            Route::get('/notes/{id}', 'show');
             Route::post('/notes', 'store');
         });
     });

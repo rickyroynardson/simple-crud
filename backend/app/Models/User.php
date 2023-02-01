@@ -52,11 +52,9 @@ class User extends Authenticatable
     public function createToken(string $name, string $type, array $abilities = ['*'])
     {
         if ($type === 'access') {
-            // $expires_at = now()->addMinutes(env('ACCESS_TOKEN_EXPIRES_IN', 60 * 24 * 1));
-            $expires_at = now()->addMinute(1);
+            $expires_at = now()->addMinutes(env('ACCESS_TOKEN_EXPIRES_IN', 60 * 24 * 1));
         } else if ($type === 'refresh') {
-            $expires_at = now()->addMinute(10);
-            // $expires_at = now()->addMinute(env('REFRESH_TOKEN_EXPIRES_IN', 60 * 24 * 30));
+            $expires_at = now()->addMinute(env('REFRESH_TOKEN_EXPIRES_IN', 60 * 24 * 30));
         }
 
         $token = $this->tokens()->create([

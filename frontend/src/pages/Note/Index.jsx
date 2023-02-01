@@ -3,8 +3,10 @@ import {
   Button,
   Card,
   CardBody,
+  Flex,
   FormControl,
   FormLabel,
+  Link,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -22,6 +24,7 @@ import {
 import { useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import axios from '../../axios';
 import Layout from '../../components/Layout';
 import { InputNormal, InputTextarea } from '../../components/molecules/Input';
@@ -63,6 +66,7 @@ export default function Index() {
       });
       titleRef.current.value = '';
       bodyRef.current.value = '';
+      fetchNotes();
       onClose();
     } catch (error) {
       setIsSubmitting(false);
@@ -93,7 +97,7 @@ export default function Index() {
 
   useEffect(() => {
     fetchNotes();
-  }, [notes]);
+  }, []);
 
   return (
     <>
@@ -101,7 +105,19 @@ export default function Index() {
         <title>Note</title>
       </Helmet>
       <Layout user={user}>
-        <Button onClick={onOpen}>Add Note</Button>
+        <Flex alignItems={'center'} justifyContent={'space-between'}>
+          <Text fontWeight={'semibold'} fontSize={{ md: '4xl' }}>
+            Note
+          </Text>
+          <Button
+            size={'md'}
+            variant={'outline'}
+            colorScheme={'teal'}
+            onClick={onOpen}
+          >
+            Add Note
+          </Button>
+        </Flex>
         {isLoading && (
           <Box>
             <Spinner />
@@ -109,14 +125,21 @@ export default function Index() {
         )}
         <SimpleGrid gap={4} columns={{ md: 3 }}>
           {notes.map((note) => (
-            <Card key={note.id}>
-              <CardBody>
-                <Text fontSize={{ md: 'xl' }} fontWeight='semibold'>
-                  {note.title}
-                </Text>
-                <Text noOfLines={3}>{note.body}</Text>
-              </CardBody>
-            </Card>
+            <Link
+              as={NavLink}
+              to={`/note/${note.id}`}
+              key={note.id}
+              style={{ textDecoration: 'none' }}
+            >
+              <Card w='full' h='full' _hover={{ bg: 'gray.100' }}>
+                <CardBody>
+                  <Text fontSize={{ md: 'xl' }} fontWeight='semibold'>
+                    {note.title}
+                  </Text>
+                  <Text noOfLines={3}>{note.body}</Text>
+                </CardBody>
+              </Card>
+            </Link>
           ))}
         </SimpleGrid>
 

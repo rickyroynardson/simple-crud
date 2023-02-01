@@ -16,6 +16,12 @@ class NoteController extends Controller
         return response()->json(['message' => 'Success fetch all user notes data', 'data' => $notes, 'status' => 200], 200);
     }
 
+    public function show(Request $request, $id)
+    {
+        $note = $request->user()->notes()->find($id);
+        return response()->json(['message' => 'Success fetch user note data by id:' . $id, 'data' => $note, 'status' => 200], 200);
+    }
+
     public function store(StoreNoteRequest $request)
     {
         $validated = $request->validated();
