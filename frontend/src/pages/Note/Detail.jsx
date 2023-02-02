@@ -1,4 +1,13 @@
-import { Button, Card, CardBody, Text } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Card,
+  CardBody,
+  Skeleton,
+  SkeletonText,
+  Stack,
+  Text,
+} from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { FiChevronLeft } from 'react-icons/fi';
@@ -52,7 +61,24 @@ export default function Detail() {
         </Button>
         <Card>
           <CardBody>
-            <Text>{note.title}</Text>
+            <Stack spacing={3}>
+              <Box>
+                <Text fontWeight={'semibold'}>Title:</Text>
+                {isLoading ? (
+                  <SkeletonText noOfLines={1} skeletonHeight='24px' />
+                ) : (
+                  <Text>{note.title}</Text>
+                )}
+              </Box>
+              <Box>
+                <Text fontWeight={'semibold'}>Body:</Text>
+                {isLoading ? (
+                  <SkeletonText skeletonHeight='24px' />
+                ) : (
+                  <Text>{note.body}</Text>
+                )}
+              </Box>
+            </Stack>
           </CardBody>
         </Card>
       </Layout>

@@ -15,6 +15,7 @@ import {
   ModalHeader,
   ModalOverlay,
   SimpleGrid,
+  Skeleton,
   Spinner,
   Text,
   Textarea,
@@ -131,7 +132,7 @@ export default function Index() {
               key={note.id}
               style={{ textDecoration: 'none' }}
             >
-              <Card w='full' h='full' _hover={{ bg: 'gray.100' }}>
+              <Card w='full' h='full' _hover={{ bg: 'gray.50' }}>
                 <CardBody>
                   <Text fontSize={{ md: 'xl' }} fontWeight='semibold'>
                     {note.title}
